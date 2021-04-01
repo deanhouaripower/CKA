@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: appfront
+  name: appfront5
+spec:
+  containers:
+  - image: nginx
+    name: appfront
+    volumeMounts:
+    - name: vol1
+      mountPath: /usr/share/nginx/html
+    - name: volconf
+      mountPath: /etc/nginx/conf.d
+  - image: deanj08/appdata
+    name: html
+    args:
+    - $(LESSON)
+    - $(INTERVAL)
+    env:
+    - name: LESSON
+      valueFrom:
+        configMapKeyRef:
+           key: LESSON
+           name: cm1
+    - name: INTERVAL
+      valueFrom:
+        configMapKeyRef:
+           key: INTERVAL
+           name: cm1
+    volumeMounts:
+    - name: vol1
+      mountPath: /var/html
+  volumes:
+  - name: vol1
+    emptyDir: {}
+  - name: volconf
+    configMap:
+      name: cm6
+

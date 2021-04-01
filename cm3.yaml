@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  INTERVAL: |
+    2
+  LESSON: |
+    configmap
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: cm3
